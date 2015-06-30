@@ -8,23 +8,55 @@
 
 
 #import "ViewController.h"
+#import "TodoService.h"
+#import "Todo.h"
+#import "TodoCell.h"
+#import "ReactiveCocoa.h"
 
 
-@interface ViewController ()
+@interface ViewController () {
+    TodoService *_todoService;
+}
 
 @end
 
 @implementation ViewController
 
+- (TodoService *)todoService {
+    if (!_todoService) {
+        _todoService = [[TodoService alloc] init];
+    }
+    return _todoService;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
 }
 
 - (void)didReceiveMemoryWarning {
+    _todoService = nil;
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    NSLog(@"Count fetched: %i", self.todoService.list.count);
+    return self.todoService.list.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"Cell for index: %i", indexPath.row);
+    Todo *todo = self.todoService.list[(NSUInteger) indexPath.row];
+
+    TodoCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TodoCell"];
+
+    RAC(cell.lblText, text) = RACObserve(todo, text);
+    RACChannelTo(cell.swcDone, on) = RACChannelTo(todo, done);
+
+    [cell.swcDone.rac_newOnChannel subscribeNext:^(id x) {
+        NSLog(@"Data: %@", self.todoService.list);
+    }];
+
+    return cell;
 }
 
 
