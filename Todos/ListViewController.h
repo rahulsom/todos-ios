@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  ListViewController.h
 //  Todos
 //
 //  Created by Rahul Somasunderam on 6/26/15.
@@ -10,7 +10,7 @@
 #import <UIKit/UIKit.h>
 
 
-@interface ViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
+@interface ListViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UITableView *tblTodos;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *btnClear;

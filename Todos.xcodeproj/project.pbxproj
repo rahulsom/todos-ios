@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		24F72FB43118601CA4844557 /* libPods-Todos.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 31C7748ED91348FAD24A6DA5 /* libPods-Todos.a */; };
 		6742404B59C984204550187D /* TodosTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 67424EA38C6A69C134721CFA /* TodosTests.m */; };
-		67424323E5F48534171852F3 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67424011887ADE8664DB9584 /* ViewController.m */; };
+		67424323E5F48534171852F3 /* ListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67424011887ADE8664DB9584 /* ListViewController.m */; };
 		6742442DE07E89C72CCF52AE /* Todo.m in Sources */ = {isa = PBXBuildFile; fileRef = 674247700213AD694AB24A14 /* Todo.m */; };
 		674244A0E42A127C88EC7EAA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6742494872A2D7F096838701 /* Images.xcassets */; };
 		6742465452052861455F3F18 /* TodoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 67424AD22960AC0C35A3ACF7 /* TodoCell.m */; };
@@ -33,10 +33,10 @@
 /* Begin PBXFileReference section */
 		13886FFE9C94C71A78A53D99 /* Pods-Todos.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Todos.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Todos/Pods-Todos.debug.xcconfig"; sourceTree = "<group>"; };
 		31C7748ED91348FAD24A6DA5 /* libPods-Todos.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Todos.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		67424011887ADE8664DB9584 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		67424011887ADE8664DB9584 /* ListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ListViewController.m; sourceTree = "<group>"; };
 		674240806A53DBE8316192E1 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		6742425D0E5A4BD6F614DFCB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		674243675FE285FB3CF1467B /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		674243675FE285FB3CF1467B /* ListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ListViewController.h; sourceTree = "<group>"; };
 		6742439F434F8B1B06B8A100 /* TodoService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TodoService.m; sourceTree = "<group>"; };
 		674245A44D4C6B3D7C357CC5 /* TodoService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TodoService.h; sourceTree = "<group>"; };
 		674245D587261A1C6D3369F5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -129,8 +129,8 @@
 				6742425D0E5A4BD6F614DFCB /* AppDelegate.h */,
 				674240806A53DBE8316192E1 /* AppDelegate.m */,
 				674249B7B11BEA0EEBA6F8E6 /* Main.storyboard */,
-				674243675FE285FB3CF1467B /* ViewController.h */,
-				67424011887ADE8664DB9584 /* ViewController.m */,
+				674243675FE285FB3CF1467B /* ListViewController.h */,
+				67424011887ADE8664DB9584 /* ListViewController.m */,
 				6742439F434F8B1B06B8A100 /* TodoService.m */,
 				674245A44D4C6B3D7C357CC5 /* TodoService.h */,
 				674247700213AD694AB24A14 /* Todo.m */,
@@ -292,7 +292,7 @@
 			files = (
 				67424C8DCBCE4D444F225454 /* main.m in Sources */,
 				67424A7894AAAB16B168D420 /* AppDelegate.m in Sources */,
-				67424323E5F48534171852F3 /* ViewController.m in Sources */,
+				67424323E5F48534171852F3 /* ListViewController.m in Sources */,
 				67424F4500845E868BFD93D6 /* TodoService.m in Sources */,
 				6742442DE07E89C72CCF52AE /* Todo.m in Sources */,
 				6742465452052861455F3F18 /* TodoCell.m in Sources */,

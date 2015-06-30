@@ -1,5 +1,5 @@
 //
-//  ViewController.m
+//  ListViewController.m
 //  Todos
 //
 //  Created by Rahul Somasunderam on 6/26/15.
@@ -7,20 +7,20 @@
 //
 
 
-#import "ViewController.h"
+#import "ListViewController.h"
 #import "TodoService.h"
 #import "Todo.h"
 #import "TodoCell.h"
 #import "ReactiveCocoa.h"
 
 
-@interface ViewController () {
+@interface ListViewController () {
     TodoService *_todoService;
 }
 
 @end
 
-@implementation ViewController
+@implementation ListViewController
 
 - (TodoService *)todoService {
     if (!_todoService) {
