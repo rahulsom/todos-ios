@@ -12,21 +12,16 @@
 #import "Todo.h"
 #import "TodoCell.h"
 #import "ReactiveCocoa.h"
+#import "ServiceContext.h"
 
 
-@interface ListViewController () {
-    TodoService *_todoService;
-}
-
+@interface ListViewController ()
 @end
 
 @implementation ListViewController
 
 - (TodoService *)todoService {
-    if (!_todoService) {
-        _todoService = [[TodoService alloc] init];
-    }
-    return _todoService;
+    return [ServiceContext instance].todoService;
 }
 
 - (void)viewDidLoad {
@@ -36,24 +31,19 @@
                     alloc]
                     initWithEnabled:[RACSignal return:@YES]
                         signalBlock:^RACSignal *(id input) {
-                            self.todoService.clearDone;
+                            [self.todoService clearDone];
                             [self.tblTodos reloadData];
                             return [RACSignal empty];
                         }];
 }
 
-- (void)didReceiveMemoryWarning {
-    _todoService = nil;
-    [super didReceiveMemoryWarning];
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSLog(@"Count fetched: %i", self.todoService.list.count);
+    NSLog(@"Count fetched: %lu", (unsigned long)self.todoService.list.count);
     return self.todoService.list.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"Cell for index: %i", indexPath.row);
+    NSLog(@"Cell for index: %li", (long)indexPath.row);
     Todo *todo = self.todoService.list[(NSUInteger) indexPath.row];
     TodoCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TodoCell"];
 
@@ -67,7 +57,7 @@
     RACSignal *changeSignal = [RACObserve(todo, done) skip:1];
 
     [changeSignal subscribeNext:^(id x) {
-        NSLog(@"Data: %@", self.todoService.list);
+        NSLog(@"Something was toggled");
         [self.todoService save];
     }];
 

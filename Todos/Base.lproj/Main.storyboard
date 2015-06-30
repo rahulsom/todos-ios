@@ -2,10 +2,11 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--List View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
                 <viewController id="vXZ-lx-hvc" customClass="ListViewController" sceneMemberID="viewController">
@@ -22,7 +23,13 @@
                                 <items>
                                     <navigationItem title="Todos" id="xZE-ZG-zcN">
                                         <barButtonItem key="leftBarButtonItem" title="Clear Done" id="Bnr-9u-U4F"/>
-                                        <barButtonItem key="rightBarButtonItem" title="Add" id="8Fi-cC-AUI"/>
+                                        <barButtonItem key="rightBarButtonItem" title="Add" id="8Fi-cC-AUI">
+                                            <connections>
+                                                <segue destination="q9I-bv-Dwm" kind="popoverPresentation" popoverAnchorBarButtonItem="8Fi-cC-AUI" id="vau-yy-xax">
+                                                    <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                                </segue>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -74,6 +81,57 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="158" y="136"/>
+        </scene>
+        <!--Add View Controller-->
+        <scene sceneID="DBe-dn-Qhb">
+            <objects>
+                <viewController id="q9I-bv-Dwm" customClass="AddViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="5FQ-vG-0ua"/>
+                        <viewControllerLayoutGuide type="bottom" id="ONX-zU-Bd7"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="CF9-JA-sFb">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6lH-QG-K3F">
+                                <rect key="frame" x="330" y="362" width="51" height="30"/>
+                                <state key="normal" title="Cancel">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WIQ-Kz-kUq">
+                                <rect key="frame" x="389" y="362" width="51" height="30"/>
+                                <state key="normal" title="Save">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3bn-X4-lUu">
+                                <rect key="frame" x="16" y="28" width="568" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="3bn-X4-lUu" firstAttribute="trailing" secondItem="CF9-JA-sFb" secondAttribute="trailingMargin" id="Bbk-gh-ZmY"/>
+                            <constraint firstAttribute="centerX" secondItem="WIQ-Kz-kUq" secondAttribute="leading" constant="-25" id="Dkm-sk-ps9"/>
+                            <constraint firstItem="3bn-X4-lUu" firstAttribute="top" secondItem="5FQ-vG-0ua" secondAttribute="bottom" constant="52" id="Sb6-Lh-8mt"/>
+                            <constraint firstAttribute="centerY" secondItem="WIQ-Kz-kUq" secondAttribute="centerY" id="Y9z-Mo-Rvl"/>
+                            <constraint firstAttribute="centerY" secondItem="6lH-QG-K3F" secondAttribute="centerY" id="cNt-Td-148"/>
+                            <constraint firstItem="3bn-X4-lUu" firstAttribute="leading" secondItem="CF9-JA-sFb" secondAttribute="leadingMargin" id="hpM-cH-WoY"/>
+                            <constraint firstAttribute="centerX" secondItem="6lH-QG-K3F" secondAttribute="trailing" constant="25" id="yca-7i-1ov"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="btnCancel" destination="6lH-QG-K3F" id="j0V-VQ-F1r"/>
+                        <outlet property="btnSave" destination="WIQ-Kz-kUq" id="KFJ-cG-hnQ"/>
+                        <outlet property="txtTodo" destination="3bn-X4-lUu" id="Wlr-LW-IgN"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Had-Z9-OPG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="823" y="136"/>
         </scene>
     </scenes>
 </document>

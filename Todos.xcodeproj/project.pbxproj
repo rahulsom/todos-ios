@@ -8,7 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		24F72FB43118601CA4844557 /* libPods-Todos.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 31C7748ED91348FAD24A6DA5 /* libPods-Todos.a */; };
+		67424019A76A2B8539821F98 /* AddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 674248320C346F5FFE14094D /* AddViewController.m */; };
 		6742404B59C984204550187D /* TodosTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 67424EA38C6A69C134721CFA /* TodosTests.m */; };
+		67424132BC6A1D6FBC860746 /* ServiceContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 67424E39003EF30FA9C8E1B0 /* ServiceContext.m */; };
 		67424323E5F48534171852F3 /* ListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67424011887ADE8664DB9584 /* ListViewController.m */; };
 		6742442DE07E89C72CCF52AE /* Todo.m in Sources */ = {isa = PBXBuildFile; fileRef = 674247700213AD694AB24A14 /* Todo.m */; };
 		674244A0E42A127C88EC7EAA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6742494872A2D7F096838701 /* Images.xcassets */; };
@@ -36,11 +38,14 @@
 		67424011887ADE8664DB9584 /* ListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ListViewController.m; sourceTree = "<group>"; };
 		674240806A53DBE8316192E1 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		6742425D0E5A4BD6F614DFCB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		67424266A35E59A7B8CC3718 /* AddViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddViewController.h; sourceTree = "<group>"; };
 		674243675FE285FB3CF1467B /* ListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ListViewController.h; sourceTree = "<group>"; };
 		6742439F434F8B1B06B8A100 /* TodoService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TodoService.m; sourceTree = "<group>"; };
+		67424567D804514E9300F94A /* ServiceContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceContext.h; sourceTree = "<group>"; };
 		674245A44D4C6B3D7C357CC5 /* TodoService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TodoService.h; sourceTree = "<group>"; };
 		674245D587261A1C6D3369F5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		674247700213AD694AB24A14 /* Todo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Todo.m; sourceTree = "<group>"; };
+		674248320C346F5FFE14094D /* AddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddViewController.m; sourceTree = "<group>"; };
 		6742494872A2D7F096838701 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		67424A85784AEF66E9398A3D /* TodoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TodoCell.h; sourceTree = "<group>"; };
 		67424AD22960AC0C35A3ACF7 /* TodoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TodoCell.m; sourceTree = "<group>"; };
@@ -49,6 +54,7 @@
 		67424DC62F7590C852169375 /* Todo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Todo.h; sourceTree = "<group>"; };
 		67424DEBC8B1E68DF648242B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		67424E190BED53354061F9BD /* Todos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Todos.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		67424E39003EF30FA9C8E1B0 /* ServiceContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceContext.m; sourceTree = "<group>"; };
 		67424EA38C6A69C134721CFA /* TodosTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TodosTests.m; sourceTree = "<group>"; };
 		67424EAB1CE8B4752E4255D2 /* TodosTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TodosTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		67424FB28ED8670B1468095B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = Info.plist; sourceTree = "<group>"; };
@@ -137,6 +143,10 @@
 				67424DC62F7590C852169375 /* Todo.h */,
 				67424AD22960AC0C35A3ACF7 /* TodoCell.m */,
 				67424A85784AEF66E9398A3D /* TodoCell.h */,
+				674248320C346F5FFE14094D /* AddViewController.m */,
+				67424266A35E59A7B8CC3718 /* AddViewController.h */,
+				67424E39003EF30FA9C8E1B0 /* ServiceContext.m */,
+				67424567D804514E9300F94A /* ServiceContext.h */,
 			);
 			path = Todos;
 			sourceTree = "<group>";
@@ -296,6 +306,8 @@
 				67424F4500845E868BFD93D6 /* TodoService.m in Sources */,
 				6742442DE07E89C72CCF52AE /* Todo.m in Sources */,
 				6742465452052861455F3F18 /* TodoCell.m in Sources */,
+				67424019A76A2B8539821F98 /* AddViewController.m in Sources */,
+				67424132BC6A1D6FBC860746 /* ServiceContext.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

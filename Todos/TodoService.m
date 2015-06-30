@@ -18,7 +18,7 @@
     if (self) {
         NSArray *storedData = self.load;
         _data = (NSMutableArray <Todo> *) (storedData ? storedData: [self defaultTasks]).mutableCopy;
-        NSLog(@"Data is: %@", _data);
+        NSLog(@"At init, Data is: %@", _data);
     }
     return self;
 }
@@ -34,6 +34,7 @@
 
 - (void)add:(NSString *)text {
     [_data addObject:[Todo todoWithText:text]];
+    [self save];
 }
 
 - (NSArray <Todo> *)list {
@@ -59,7 +60,7 @@
         return obj.done;
     }];
     [self save];
-    NSLog(@"Data is: %@", _data);
+    NSLog(@"After clear, Data is: %@", _data);
 }
 
 - (NSArray *)load {
@@ -71,7 +72,7 @@
                 return [Todo todoWithText:value[@"text"] done:done.boolValue];
             }]
             array];
-    NSLog(@"The array is: %@", array);
+    NSLog(@"After load, The array is: %@", array);
     return array;
 }
 
