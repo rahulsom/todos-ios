@@ -13,5 +13,6 @@
 @interface ViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UITableView *tblTodos;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *btnClear;
 
 @end

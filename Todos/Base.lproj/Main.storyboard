@@ -67,6 +67,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="btnClear" destination="Bnr-9u-U4F" id="QdJ-tX-CbQ"/>
                         <outlet property="tblTodos" destination="Ix7-Rg-OQ4" id="iZ2-kf-sf6"/>
                     </connections>
                 </viewController>

@@ -13,5 +13,6 @@
 - (void) add: (NSString *)text;
 - (NSArray<Todo> *) list;
 - (void) save;
+- (void)clearDone;
 
 @end

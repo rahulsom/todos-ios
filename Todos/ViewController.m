@@ -31,6 +31,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.btnClear.rac_command =
+            [[RACCommand
+                    alloc]
+                    initWithEnabled:[RACSignal return:@YES]
+                        signalBlock:^RACSignal *(id input) {
+                            self.todoService.clearDone;
+                            [self.tblTodos reloadData];
+                            return [RACSignal empty];
+                        }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -46,17 +55,16 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSLog(@"Cell for index: %i", indexPath.row);
     Todo *todo = self.todoService.list[(NSUInteger) indexPath.row];
-
     TodoCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TodoCell"];
 
-    RAC(cell.lblText, text) = RACObserve(todo, text);
+    RAC(cell.lblText, text) = [RACObserve(todo, text) takeUntil:cell.rac_prepareForReuseSignal];
 
     RACChannelTerminal *switchTerminal = cell.swcDone.rac_newOnChannel;
     RACChannelTerminal *modelTerminal = RACChannelTo(todo, done, @NO);
     [modelTerminal subscribe:switchTerminal];
     [switchTerminal subscribe:modelTerminal];
 
-    RACSignal *changeSignal = [RACObserve(todo, done) skip: 1];
+    RACSignal *changeSignal = [RACObserve(todo, done) skip:1];
 
     [changeSignal subscribeNext:^(id x) {
         NSLog(@"Data: %@", self.todoService.list);

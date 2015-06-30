@@ -6,51 +6,71 @@
 #import "TodoService.h"
 #import "Todo.h"
 #import "ReactiveCocoa.h"
+#import "BlocksKit.h"
 
 
 @implementation TodoService {
-    NSMutableArray <Todo> *data;
+    NSMutableArray <Todo> *_data;
 }
 
 - (instancetype)init {
     self = [super init];
     if (self) {
-        data = (NSMutableArray <Todo> *) (self.load ?: @[
-                [Todo todoWithText:@"Let's get started"],
-                [Todo todoWithText:@"This is a TODO"],
-                [Todo todoWithText:@"And here's one more" done:YES],
-        ].mutableCopy);
-        NSLog(@"Data is: %@", data);
+        NSArray *storedData = self.load;
+        _data = (NSMutableArray <Todo> *) (storedData ? storedData: [self defaultTasks]).mutableCopy;
+        NSLog(@"Data is: %@", _data);
     }
     return self;
 }
 
+- (NSArray *)defaultTasks {
+    NSLog(@"Loading defaults...");
+    return @[
+            [Todo todoWithText:@"Let's get started"],
+            [Todo todoWithText:@"This is a TODO"],
+            [Todo todoWithText:@"And here's one more" done:YES],
+    ];
+}
+
 - (void)add:(NSString *)text {
-    [data addObject:[Todo todoWithText:text]];
+    [_data addObject:[Todo todoWithText:text]];
 }
 
 - (NSArray <Todo> *)list {
-    return data;
+    return _data;
 }
 
 - (void)save {
-    if (data) {
-        NSArray *array = [[data
-                    rac_sequence]
-                    map:^id(Todo *value) {
-                        return @{@"text":value.text, @"done": @(value.done)};
-                    }].array;
+    if (_data) {
+        NSArray *array = [[[_data
+                rac_sequence]
+                map:^id(Todo *value) {
+                    return @{@"text" : value.text, @"done" : @(value.done)};
+                }]
+                array];
         [[NSUserDefaults standardUserDefaults] setObject:array forKey:@"Data"];
+        NSLog(@"Saved Data");
     }
+}
+
+- (void)clearDone {
+
+    [_data bk_performReject:^BOOL(Todo *obj) {
+        return obj.done;
+    }];
+    [self save];
+    NSLog(@"Data is: %@", _data);
 }
 
 - (NSArray *)load {
     NSArray *stored = [[NSUserDefaults standardUserDefaults] arrayForKey:@"Data"];
-    NSArray *array = [[stored
+    NSArray *array = [[[stored
             rac_sequence]
             map:^id(NSDictionary *value) {
-                return [Todo todoWithText:value[@"text"] done:((NSNumber *)(value[@"done"])).boolValue];
-            }].array;
+                NSNumber *done = (NSNumber *) value[@"done"];
+                return [Todo todoWithText:value[@"text"] done:done.boolValue];
+            }]
+            array];
     NSLog(@"The array is: %@", array);
     return array;
 }

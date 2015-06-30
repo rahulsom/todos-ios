@@ -3,6 +3,7 @@
 
 target 'Todos' do
   pod "ReactiveCocoa"
+  pod "BlocksKit"
 end
 
 target 'TodosTests' do
