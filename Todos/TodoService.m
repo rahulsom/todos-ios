@@ -5,6 +5,7 @@
 
 #import "TodoService.h"
 #import "Todo.h"
+#import "ReactiveCocoa.h"
 
 
 @implementation TodoService {
@@ -33,11 +34,23 @@
 }
 
 - (void)save {
-    [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"Data"];
+    if (data) {
+        NSArray *array = [[data
+                    rac_sequence]
+                    map:^id(Todo *value) {
+                        return @{@"text":value.text, @"done": @(value.done)};
+                    }].array;
+        [[NSUserDefaults standardUserDefaults] setObject:array forKey:@"Data"];
+    }
 }
 
 - (NSArray *)load {
-    NSArray *array = [[NSUserDefaults standardUserDefaults] arrayForKey:@"Data"];
+    NSArray *stored = [[NSUserDefaults standardUserDefaults] arrayForKey:@"Data"];
+    NSArray *array = [[stored
+            rac_sequence]
+            map:^id(NSDictionary *value) {
+                return [Todo todoWithText:value[@"text"] done:((NSNumber *)(value[@"done"])).boolValue];
+            }].array;
     NSLog(@"The array is: %@", array);
     return array;
 }

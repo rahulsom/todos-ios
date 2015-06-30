@@ -50,10 +50,17 @@
     TodoCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TodoCell"];
 
     RAC(cell.lblText, text) = RACObserve(todo, text);
-    RACChannelTo(cell.swcDone, on) = RACChannelTo(todo, done);
 
-    [cell.swcDone.rac_newOnChannel subscribeNext:^(id x) {
+    RACChannelTerminal *switchTerminal = cell.swcDone.rac_newOnChannel;
+    RACChannelTerminal *modelTerminal = RACChannelTo(todo, done, @NO);
+    [modelTerminal subscribe:switchTerminal];
+    [switchTerminal subscribe:modelTerminal];
+
+    RACSignal *changeSignal = [RACObserve(todo, done) skip: 1];
+
+    [changeSignal subscribeNext:^(id x) {
         NSLog(@"Data: %@", self.todoService.list);
+        [self.todoService save];
     }];
 
     return cell;

@@ -14,16 +14,12 @@
 @property(nonatomic, strong) NSString *text;
 @property(nonatomic) BOOL done;
 
-- (instancetype)initWithText:(NSString *)text;
-
-- (instancetype)initWithText:(NSString *)text done:(BOOL)done;
-
-+ (instancetype)todoWithText:(NSString *)text done:(BOOL)done;
-
-
 - (NSString *)description;
 
-+ (instancetype)todoWithText:(NSString *)text;
+- (instancetype)initWithText:(NSString *)text done:(BOOL)done;
+- (instancetype)initWithText:(NSString *)text;
 
++ (instancetype)todoWithText:(NSString *)text done:(BOOL)done;
++ (instancetype)todoWithText:(NSString *)text;
 
 @end
