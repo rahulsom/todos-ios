@@ -3,7 +3,6 @@
 // Copyright (c) 2015 Rahul Somasunderam. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
 @class Todo;
