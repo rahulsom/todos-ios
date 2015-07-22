@@ -5,13 +5,13 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath "org.openbakery:xcode-plugin:0.11.3-SNAPSHOT"
+//        classpath "org.openbakery:xcode-plugin:0.11.3-SNAPSHOT"
         classpath 'com.github.damage-control.report:html-generator:1.2'
     }
 }
 
 plugins {
-    // id "org.openbakery.xcode-plugin" version "0.11.2"
+    id "org.openbakery.xcode-plugin" version "0.11.2"
 }
 
 apply plugin: "org.openbakery.xcode-plugin"
@@ -49,82 +49,6 @@ xcodebuild {
     */
 }
 
-// task cpd <<  {
-//     setProperty('description', 'Runs a Copy Paste report on the codebase')
-//
-//     def destDir = "${gradle.gradleUserHomeDir.absolutePath}/ios"
-//     if (!file("${destDir}/pmd-bin-4.2.5.zip").exists()) {
-//
-//         download {
-//             src 'http://tcpdiag.dl.sourceforge.net/project/pmd/pmd/4.2.5/pmd-bin-4.2.5.zip'
-//             dest destDir
-//         }
-//     }
-//     if (!file("${destDir}/ObjCLanguage-0.0.7-SNAPSHOT.jar").exists()) {
-//         download {
-//             src 'https://raw.githubusercontent.com/jkennedy1980/Objective-C-CPD-Language/master/releases/ObjCLanguage-0.0.7-SNAPSHOT.jar'
-//             dest destDir
-//         }
-//     }
-//
-//     copy {
-//         def zipFile = file("${destDir}/pmd-bin-4.2.5.zip")
-//         def outputDir = file("${destDir}/tools")
-//         from zipTree(zipFile)
-//         into outputDir
-//     }
-//
-//     def cp = file("${destDir}/tools/pmd-4.2.5/lib").listFiles()*.absolutePath +
-//             file("${destDir}/ObjCLanguage-0.0.7-SNAPSHOT.jar").absolutePath
-//
-//     javaexec {
-//
-//         jvmArgs(["-Xmx512m"])
-//         classpath cp
-//         main "net.sourceforge.pmd.cpd.CPD"
-//         args([
-//               "--minimum-tokens", "60",
-//               "--files", "${projectDir.absolutePath}/${xcodebuild.target}", "${projectDir.absolutePath}/${xcodebuild.target}Tests",
-//               "--language", "ObjectiveC",
-//               "--encoding", "UTF-8",
-//               "--format", "net.sourceforge.pmd.cpd.XMLRenderer"
-//         ])
-//
-//         standardOutput = file("${buildDir}/cpd.xml").newOutputStream()
-//     }
-//
-// }
-
-//task testReport << {
-//    def resultsFile = file("${buildDir}/test/test-results.xml")
-//    def results = new XmlSlurper().parse(resultsFile)
-//
-//    def resultsDir = new File(buildDir, 'test')
-//    def xmlDir = new File(resultsDir, 'xml')
-//    xmlDir.mkdirs()
-//    def targetDir = new File(resultsDir, 'html')
-//
-//    int index = 0
-//
-//    resultsDir.listFiles().
-//        findAll{it.name.endsWith('.xml')}.
-//        each { f ->
-//            def xml = new XmlSlurper().parseText(f.text)
-//            xml.testsuite.each {ts ->
-//                new File(xmlDir, "testsuite-${++index}.xml").text = groovy.xml.XmlUtil.serialize(ts)
-//            }
-//        }
-//
-//    ant.taskdef(
-//        name: 'junitreport',
-//        classname: 'org.apache.tools.ant.taskdefs.optional.junit.XMLResultAggregator',
-//        classpath: configurations.xcunitXmlToHtml.asPath
-//    )
-//    ant.junitreport(todir: resultsDir) {
-//        fileset(dir: xmlDir, includes: '*.xml')
-//        report(todir: targetDir, format: "frames")
-//    }
-//}
 gradle.addListener(new TaskExecutionListener(){
 
     @Override
