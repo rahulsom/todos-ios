@@ -1,0 +1,44 @@
+apply plugin: 'groovy'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    compile 'org.codehaus.groovy:groovy-all:2.3.7'
+
+    testCompile "org.spockframework:spock-core:0.7-groovy-2.0"
+    testCompile 'com.athaydes:spock-reports:1.1'
+    testCompile "junit:junit:4.11"
+    testCompile "io.appium:java-client:2.1.0"
+
+}
+
+test {
+    def process = null
+    if (System.getenv('JOB_URL')) {
+        testLogging {
+            events 'standard_out'
+        }
+    } else {
+        beforeTest { TestDescriptor descriptor ->
+            logger.lifecycle("Running test: ${descriptor.className}::${descriptor.name}")
+        }
+    }
+
+//    beforeSuite { TestDescriptor descriptor ->
+//        if (!descriptor.parent) {
+//            logger.lifecycle("Launching appium...")
+//            process = "appium".execute()
+//        }
+//    }
+//
+//    afterSuite { TestDescriptor descriptor, TestResult result ->
+//        if (!descriptor.parent) {
+//            logger.lifecycle("Killing appium...")
+//            process.destroy()
+//        }
+//    }
+}

@@ -80,7 +80,7 @@ Pods/
 
 ### Gradle template
 .gradle
-build/
+.gradletasknamecache
 
 # Ignore Gradle GUI config
 gradle-app.setting

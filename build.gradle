@@ -1,0 +1,244 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath "org.openbakery:xcode-plugin:0.11.3-SNAPSHOT"
+        classpath 'com.github.damage-control.report:html-generator:1.2'
+    }
+}
+
+plugins {
+    // id "org.openbakery.xcode-plugin" version "0.11.2"
+}
+
+apply plugin: "org.openbakery.xcode-plugin"
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+}
+
+configurations {
+    xcunitXmlToHtml
+}
+
+/*
+// Generate coverage reports as XML
+coverage.outputFormat = 'xml'
+*/
+
+dependencies {
+    xcunitXmlToHtml 'org.apache.ant:ant-junit:1.8.2'
+    xcunitXmlToHtml 'com.github.damage-control.report:html-generator:1.2'
+}
+
+xcodebuild {
+    workspace = 'Todos.xcworkspace'
+    target = 'Todos'
+    scheme = 'Todos'
+    sdk = 'iphonesimulator'
+    /*
+    // Restrict to only one device type
+    destination {
+        name = 'iPhone 6'
+    }
+    */
+}
+
+// task cpd <<  {
+//     setProperty('description', 'Runs a Copy Paste report on the codebase')
+//
+//     def destDir = "${gradle.gradleUserHomeDir.absolutePath}/ios"
+//     if (!file("${destDir}/pmd-bin-4.2.5.zip").exists()) {
+//
+//         download {
+//             src 'http://tcpdiag.dl.sourceforge.net/project/pmd/pmd/4.2.5/pmd-bin-4.2.5.zip'
+//             dest destDir
+//         }
+//     }
+//     if (!file("${destDir}/ObjCLanguage-0.0.7-SNAPSHOT.jar").exists()) {
+//         download {
+//             src 'https://raw.githubusercontent.com/jkennedy1980/Objective-C-CPD-Language/master/releases/ObjCLanguage-0.0.7-SNAPSHOT.jar'
+//             dest destDir
+//         }
+//     }
+//
+//     copy {
+//         def zipFile = file("${destDir}/pmd-bin-4.2.5.zip")
+//         def outputDir = file("${destDir}/tools")
+//         from zipTree(zipFile)
+//         into outputDir
+//     }
+//
+//     def cp = file("${destDir}/tools/pmd-4.2.5/lib").listFiles()*.absolutePath +
+//             file("${destDir}/ObjCLanguage-0.0.7-SNAPSHOT.jar").absolutePath
+//
+//     javaexec {
+//
+//         jvmArgs(["-Xmx512m"])
+//         classpath cp
+//         main "net.sourceforge.pmd.cpd.CPD"
+//         args([
+//               "--minimum-tokens", "60",
+//               "--files", "${projectDir.absolutePath}/${xcodebuild.target}", "${projectDir.absolutePath}/${xcodebuild.target}Tests",
+//               "--language", "ObjectiveC",
+//               "--encoding", "UTF-8",
+//               "--format", "net.sourceforge.pmd.cpd.XMLRenderer"
+//         ])
+//
+//         standardOutput = file("${buildDir}/cpd.xml").newOutputStream()
+//     }
+//
+// }
+
+//task testReport << {
+//    def resultsFile = file("${buildDir}/test/test-results.xml")
+//    def results = new XmlSlurper().parse(resultsFile)
+//
+//    def resultsDir = new File(buildDir, 'test')
+//    def xmlDir = new File(resultsDir, 'xml')
+//    xmlDir.mkdirs()
+//    def targetDir = new File(resultsDir, 'html')
+//
+//    int index = 0
+//
+//    resultsDir.listFiles().
+//        findAll{it.name.endsWith('.xml')}.
+//        each { f ->
+//            def xml = new XmlSlurper().parseText(f.text)
+//            xml.testsuite.each {ts ->
+//                new File(xmlDir, "testsuite-${++index}.xml").text = groovy.xml.XmlUtil.serialize(ts)
+//            }
+//        }
+//
+//    ant.taskdef(
+//        name: 'junitreport',
+//        classname: 'org.apache.tools.ant.taskdefs.optional.junit.XMLResultAggregator',
+//        classpath: configurations.xcunitXmlToHtml.asPath
+//    )
+//    ant.junitreport(todir: resultsDir) {
+//        fileset(dir: xmlDir, includes: '*.xml')
+//        report(todir: targetDir, format: "frames")
+//    }
+//}
+gradle.addListener(new TaskExecutionListener(){
+
+    @Override
+    void beforeExecute(Task task) {
+
+    }
+
+    @Override
+    void afterExecute(Task task, TaskState state) {
+        if (task.name == 'xcodetest') {
+
+            int index = 0
+            def resultsDir = new File("${buildDir}/test")
+            def xmlDir = new File(resultsDir, "xml")
+            xmlDir.mkdir()
+            resultsDir.listFiles().
+                    findAll { it.name.endsWith('.xml') }.
+                    each { f ->
+                        def xml = new XmlSlurper().parseText(f.text)
+                        xml.testsuite.each { ts ->
+                            def pkgName = ts.@name.toString().replace('.', '_').replace('/', '.').replace(' ', '_') + '.'
+                            ts.testcase.each {
+                                it.@classname = pkgName + it.@classname
+                            }
+                            new File(xmlDir, "testsuite-${++index}.xml").text = groovy.xml.XmlUtil.serialize(ts)
+                        }
+                    }
+
+
+            def report = new com.github.damagecontrol.report.htmlgenerator.Report() {
+                private static final CSS_URL = getResource('/com/github/damagecontrol/htmlreport/statics/style/damage-control.css')
+                private static final JQUERY_URL = getResource('/com/github/damagecontrol/htmlreport/statics/js/jquery-1.7.2.min.js')
+                private static final JS_URL = getResource('/com/github/damagecontrol/htmlreport/statics/js/damage-control.js')
+
+                private final collector = new com.github.damagecontrol.report.htmlgenerator.TestResultsCollector() {
+                    final results = new com.github.damagecontrol.report.htmlgenerator.TestResults()
+
+                    def collect(reader) {
+                        Node testSuite = new XmlParser().parse(reader)
+
+                        collectTestSuite(testSuite)
+                        collectTestCases(testSuite)
+                        collectIgnoredTestCases(testSuite)
+                    }
+
+                    private collectTestSuite(testSuite) {
+                        def spec = results.spec(testSuite.'@name')
+
+                        spec.duration = testSuite.'@time'
+                        spec.output.standard = testSuite.'system-out' ? testSuite.'system-out'[0].text() : ''
+                        spec.output.error = testSuite.'system-err' ? testSuite.'system-err'[0].text() : ''
+                    }
+
+                    private collectTestCases(testSuite) {
+                        testSuite.'testcase'.each { testCase ->
+                            def feature
+                            def featureName = removeBackslash(testCase.'@name')
+
+                            if (testCase.failure) {
+                                feature = results.spec(testCase.'@classname').failed(featureName)
+                                feature.details = testCase.failure[0].text()
+                            } else if (testCase.error) {
+                                feature = results.spec(testCase.'@classname').failed(featureName)
+                                feature.details = testCase.error[0].text()
+                            } else if (testCase.skipped) {
+                                feature = results.spec(testCase.'@classname').skipped(featureName)
+                            } else {
+                                feature = results.spec(testCase.'@classname').passed(featureName)
+                            }
+
+                            feature.duration = testCase.'@time'
+                        }
+                    }
+
+                    private collectIgnoredTestCases(testSuite) {
+                        testSuite.'ignored-testcase'.each { testCase ->
+                            results.spec(testCase.'@classname').skipped(testCase.'@name')
+                        }
+                    }
+
+                    private removeBackslash(testName) {
+                        testName.replaceAll(/\\'/, "'")
+                    }
+                }
+                private final indexTemplate = new com.github.damagecontrol.report.htmlgenerator.HtmlIndexTemplate()
+                private final specTemplate = new com.github.damagecontrol.report.htmlgenerator.HtmlSpecTemplate()
+
+                @Override
+                Object run() {
+                    List<File> inputFolders = (this.testResultsFolders ?: []) + this.testResultsFolder
+                    inputFolders*.listFiles().flatten().
+                            findAll {it.name.endsWith('xml')}.
+                            each {collector.collect(it.newReader())}
+                    def results = collector.results as com.github.damagecontrol.report.htmlgenerator.TestResults
+
+                    def writer = new com.github.damagecontrol.report.htmlgenerator.HtmlFileWriter(outputFolder: outputFolder)
+                    // GroovyFileReader reader = new GroovyFileReader(inputFolders: specDefinitionsFolderList())
+
+                    writer.write('index', indexTemplate.generate(title, results) as String)
+
+                    results.specs.each { name, spec ->
+                        // spec.parseEachFeatureDefinition(reader.read(name))
+                        writer.write(name, specTemplate.generate(title, spec) as String)
+                    }
+
+                    org.apache.commons.io.FileUtils.copyURLToFile(CSS_URL, new File(outputFolder.absolutePath + '/style/damage-control.css'))
+                    org.apache.commons.io.FileUtils.copyURLToFile(JQUERY_URL, new File(outputFolder.absolutePath + '/js/jquery.min.js'))
+                    org.apache.commons.io.FileUtils.copyURLToFile(JS_URL, new File(outputFolder.absolutePath + '/js/damage-control.js'))
+                }
+            }
+            report.title = "Test Report"
+            report.testResultsFolder = new File("${buildDir}/test/xml")
+            report.outputFolder = new File("${buildDir}/test/html")
+            report.run()
+        }
+    }
+})

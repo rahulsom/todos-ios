@@ -1,0 +1,3 @@
+include 'FunctionalTests'
+
+rootProject.name = 'Todos'

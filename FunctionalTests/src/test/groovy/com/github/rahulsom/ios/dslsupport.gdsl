@@ -1,0 +1,9 @@
+package com.github.rahulsom.ios
+
+def ctx = context(ctype: "io.appium.java_client.MobileElement")
+
+contributor(ctx) {
+    method(name: 'value', type: 'java.lang.String')
+    method(name: 'name', type: 'java.lang.String')
+    method(name: 'leftShift', type: 'void', params: [keys: "java.lang.String"])
+}

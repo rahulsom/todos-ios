@@ -54,6 +54,9 @@
                                                 </switch>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <accessibility key="accessibilityConfiguration">
+                                            <bool key="isElement" value="YES"/>
+                                        </accessibility>
                                         <connections>
                                             <outlet property="lblText" destination="PCk-BT-bsZ" id="tct-IC-NON"/>
                                             <outlet property="swcDone" destination="QV6-Tc-Rue" id="V3E-Ce-wKe"/>
