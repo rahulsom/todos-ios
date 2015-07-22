@@ -87,7 +87,6 @@ class TodosSpec extends AbstractSpec {
         c = new PollingConditions(timeout: 60, initialDelay: 1, delay: 2, factor: 1.25)
 
         then: "The rows is now 4"
-        C('UIATableView').findAll {it.text == 'This is new'}.size() == 4
         c.eventually {
             assert C("UIATableCell").size() == 4
         }

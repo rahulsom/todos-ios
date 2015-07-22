@@ -23,7 +23,7 @@ bundle install
 ```bash
 bundle exec pod setup
 ```
-4. Using cocoapods, install all dependencies.
+4. Using cocoapods, install all dependencies. This will become obsolete with `org.openbakery:xcode-plugin:0.11.3`.
 ```bash
 bundle exec pod install
 ```
