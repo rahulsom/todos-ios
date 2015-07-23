@@ -17,7 +17,6 @@ dependencies {
 }
 
 test {
-    def process = null
     if (System.getenv('JOB_URL')) {
         testLogging {
             events 'standard_out'
@@ -27,18 +26,4 @@ test {
             logger.lifecycle("Running test: ${descriptor.className}::${descriptor.name}")
         }
     }
-
-//    beforeSuite { TestDescriptor descriptor ->
-//        if (!descriptor.parent) {
-//            logger.lifecycle("Launching appium...")
-//            process = "appium".execute()
-//        }
-//    }
-//
-//    afterSuite { TestDescriptor descriptor, TestResult result ->
-//        if (!descriptor.parent) {
-//            logger.lifecycle("Killing appium...")
-//            process.destroy()
-//        }
-//    }
 }

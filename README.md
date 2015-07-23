@@ -8,6 +8,7 @@ Prerequisites
 1. You will (of course) need a Mac running `OSX >= 10.9`.
 2. You might want to install ruby in the user space using either RVM or RBENV.
 3. Ensure you have java installed on your machine and JAVA_HOME setup (for gradle).
+4. Ensure that you have nodejs and npm installed.
 
 Setting up your machine
 ---
@@ -26,6 +27,10 @@ bundle exec pod setup
 4. Using cocoapods, install all dependencies. This will become obsolete with `org.openbakery:xcode-plugin:0.11.3`.
 ```bash
 bundle exec pod install
+```
+4. Using npm, install appium.
+```bash
+npm install -g appium
 ```
 
 Performing routine tasks
@@ -50,12 +55,12 @@ Performing routine tasks
 ./gradlew build
 ```
 
+For running functional tests, you do have to launch appium manually.
+```bash
+appium
+```
 Todo
 ---
-* Working functional test
-* Demo Test
 * Analyze
 * OCLint
 * Lazybones
-* Extract Cocoa Pod
-* Extract Gradle Plugin
