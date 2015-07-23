@@ -37,6 +37,10 @@
                         }];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [self.tblTodos reloadData];
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSLog(@"Count fetched: %lu", (unsigned long)self.todoService.list.count);
     return self.todoService.list.count;
