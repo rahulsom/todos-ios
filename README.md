@@ -61,6 +61,5 @@ appium
 ```
 Todo
 ---
-* Analyze
-* OCLint
-* Lazybones
+* Lazybones template
+* Unit test reports in plugin
