@@ -1,2 +1,3 @@
 language: objective-c
-script: ./gradlew -q check
+script: ./travis.sh
+after_script: ps -ef | grep appium | grep -v grep | tr -s " " | cut -d " " -f 3 | xargs -n 1 kill
