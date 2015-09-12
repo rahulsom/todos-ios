@@ -1,5 +1,15 @@
 language: objective-c
 
+env:
+  global:
+    - TERM=dumb
+
+cache:
+  bundler: true
+  directories:
+    - $HOME/.gradle
+    - $HOME/.npm
+
 install:
   - bundle install
   - bundle exec pod install
@@ -10,9 +20,3 @@ script:
   - ./gradlew clean test
 after_script:
   - ps -ef | grep appium | grep -v grep | tr -s " " | cut -d " " -f 3 | xargs -n 1 kill
-
-cache:
-  bundler: true
-  directories:
-    - $HOME/.gradle
-    - $HOME/.npm
