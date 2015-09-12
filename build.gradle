@@ -45,6 +45,7 @@ xcodebuild {
     if (System.getenv('CI') == 'true') {
       destination {
           name = 'iPhone 6'
+          os = '8.4'
       }
     }
     /*
