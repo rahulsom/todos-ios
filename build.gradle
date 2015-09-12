@@ -41,6 +41,12 @@ xcodebuild {
     target = 'Todos'
     scheme = 'Todos'
     sdk = 'iphonesimulator'
+
+    if (System.getenv('CI') == 'true') {
+      destination {
+          name = 'iPhone 6'
+      }
+    }
     /*
     // Restrict to only one device type
     destination {
