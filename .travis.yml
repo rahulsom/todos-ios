@@ -7,6 +7,6 @@ install:
 before_script:
   - appium &
 script:
-  - ./gradlew -q check
+  - ./gradlew check
 after_script:
   - ps -ef | grep appium | grep -v grep | tr -s " " | cut -d " " -f 3 | xargs -n 1 kill
