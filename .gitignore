@@ -90,3 +90,5 @@ gradle-app.setting
 
 ### Other tools
 compile_commands.json
+
+*.app.dSYM.zip
