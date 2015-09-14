@@ -3,6 +3,7 @@ clean() {
   rm -rf *.zip 2>/dev/null
   rm -rf *.ipa 2>/dev/null
 }
+
 demo1() {
   xcodebuild \
     -scheme Todos \
@@ -31,6 +32,8 @@ demo4() { ./gradlew xcodetest }
 
 demo5() { ./gradlew FunctionalTests:test }
 
+demo6() { ./gradlew coverage }
+
 run() {
   clean
   which $1
@@ -44,3 +47,4 @@ echo "  - demo2      Use xctool to test"
 echo "  - demo3      Use nomad-cli to build ipa"
 echo "  - demo4      Use gradle to run unit tests"
 echo "  - demo5      Use gradle to run functional tests"
+echo "  - demo6      Demonstrate code reports"
