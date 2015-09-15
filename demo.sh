@@ -32,7 +32,7 @@ demo4() { ./gradlew xcodetest }
 
 demo5() { ./gradlew FunctionalTests:test }
 
-demo6() { ./gradlew coverage }
+demo6() { ./gradlew oclint cpd coverage }
 
 run() {
   clean
